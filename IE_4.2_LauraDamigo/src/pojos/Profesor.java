@@ -84,15 +84,7 @@ public class Profesor {
 	}
 	
 	
-	
-	@Override
-	public String toString() {
-		return "Profesor: " + codProf + ", nombre=" + nombreApe + ", especialidad=" + nombreEspe
-				+ ", fecha de nacimiento=" + fechaNac + ", sexo=" + sexo + ", centro=" + centro + "]";
-	}
-	
-	
-	public Profesor devuelveProf(ObjectContainer bd, int cod) {
+	public static Profesor devuelveProf(ObjectContainer bd, int cod) {
 
 		Profesor c = new Profesor(cod);
 		ObjectSet res = bd.queryByExample(c);
@@ -100,14 +92,21 @@ public class Profesor {
 			c=null;
 			return c;
 		}else {
-			Profesor ce=(Profesor)res.next();
-			return ce;
-			//while(res.hasNext()) {
-				
-			//}
+			c=(Profesor)res.next();
 		}
-			//return null;
+		return c;
 	}
+	
+	
+	
+	@Override
+	public String toString() {
+		return "Profesor: " + codProf + ", nombre=" + nombreApe + ", especialidad=" + nombreEspe;
+				//+ ", fecha de nacimiento=" + fechaNac + ", sexo=" + sexo + ", centro=" + centro;
+	}
+	
+	
+
 	
 	
 	

@@ -24,7 +24,9 @@ public class Menu {
 
 					opcion = Integer.parseInt(JOptionPane
 							.showInputDialog("Que desea hacer?\n1. Insertar profesor\n2. Borrar profesor"
-									+ "\n3. Modificar un salario\n4. Borrar un empleado\n5.-Salir"));
+									+ "\n3. Modificar un profesor\n4. Insertar Centro\n5. Borrar Centro "
+									+ "\n6. Modificar Centro\n7. Insertar Asignatura\n8. Borrar Asignatura"
+									+ "\n9. Modificar Asignatura\n10. Salir"));
 
 					switch (opcion) {
 
@@ -37,21 +39,37 @@ public class Menu {
 
 					case 2:
 
-						metodos.borrarProf(bd);
+						metodos.borrar(bd, "Profesor");
 						metodos.muestraProf(bd);
 						
 						break;
 
 					case 3:
+						
+						metodos.modificarProf(bd);
+						metodos.muestraProf(bd);
 
 						break;
 
 					case 4:
 
+						metodos.insertarCen(bd);
+						metodos.muestraCen(bd);
+						
 						break;
 
 					case 5:
 
+						metodos.borrar(bd, "Centro");
+						metodos.muestraCen(bd);
+						
+						break;
+						
+					case 6:
+
+						metodos.modificarCen(bd);
+						metodos.muestraCen(bd);
+						
 						break;
 
 					}
@@ -71,7 +89,7 @@ public class Menu {
 			
 			
 			
-		} while (opcion != 5);
+		} while (opcion != 10);
 	}
 
 }
