@@ -26,7 +26,7 @@ public class Menu {
 							.showInputDialog("Que desea hacer?\n1. Insertar profesor\n2. Borrar profesor"
 									+ "\n3. Modificar un profesor\n4. Insertar Centro\n5. Borrar Centro "
 									+ "\n6. Modificar Centro\n7. Insertar Asignatura\n8. Borrar Asignatura"
-									+ "\n9. Modificar Asignatura\n10. Salir"));
+									+ "\n9. Modificar Asignatura\n10. Añadir profesor a una Asignatura\n0. Salir"));
 
 					switch (opcion) {
 
@@ -71,6 +71,34 @@ public class Menu {
 						metodos.muestraCen(bd);
 						
 						break;
+						
+					case 7:
+
+						metodos.insertarAsig(bd);
+						metodos.muestraAsig(bd);
+						
+						break;
+						
+					case 8:
+
+						metodos.borrar(bd, "Asignatura");
+						metodos.muestraAsig(bd);
+						
+						break;
+						
+					case 9:
+
+						metodos.modificarAsig(bd);
+						metodos.muestraAsig(bd);
+						
+						break;
+						
+					case 10:
+
+						metodos.modificarProfAsig(bd);
+						metodos.muestraAsig(bd);
+						
+						break;
 
 					}
 
@@ -89,7 +117,7 @@ public class Menu {
 			
 			
 			
-		} while (opcion != 10);
+		} while (opcion != 0);
 	}
 
 }
