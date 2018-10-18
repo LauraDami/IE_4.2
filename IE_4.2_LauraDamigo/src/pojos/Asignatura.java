@@ -13,7 +13,8 @@ public class Asignatura {
 
 	@Override
 	public String toString() {
-		return "Asignatura: " + codAsig + ", nombre: " + nombreAsi + ", profesores=" + setprofesores;
+		return "Asignatura: " + codAsig + ", nombre: " + nombreAsi + ", profesores=" + setprofesores+
+				"\n*********************************************************";
 	}
 
 	public Asignatura(int codAsig, String nombreAsi, ArrayList<Profesor> setprofesores) {
@@ -27,6 +28,7 @@ public class Asignatura {
 
 		this.codAsig = codAsig;
 		this.nombreAsi = nombreAsi;
+		this.setprofesores=new ArrayList<Profesor>();
 
 	}
 
@@ -77,6 +79,37 @@ public class Asignatura {
 
 	}
 	
+	public boolean comprobarProfesor(Profesor p) {
+		boolean exists=false;
+		
+		if(setprofesores!=null) {
+					
+		for (int i=0; i<setprofesores.size(); i++) {
+			if(setprofesores.get(i).equals(p) ) {
+				exists=true;
+			}
+		}}
+		return exists;
+	}
 	
+	
+	public boolean addProfesor(Profesor p) {
+		if (comprobarProfesor(p)) {
+			return false;
+		}else {
+			setprofesores.add(p);
+			return true;
+		}
+	}
+	
+	
+	public boolean deleteProfesor(Profesor p) {
+		if (comprobarProfesor(p)) {
+			setprofesores.remove(p);
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 }

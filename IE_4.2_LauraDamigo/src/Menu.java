@@ -22,32 +22,170 @@ public class Menu {
 
 				try {
 
-					opcion = Integer.parseInt(JOptionPane
-							.showInputDialog("Que desea hacer?\n1. Insertar profesor\n2. Borrar profesor"
-									+ "\n3. Modificar un profesor\n4. Insertar Centro\n5. Borrar Centro "
-									+ "\n6. Modificar Centro\n7. Insertar Asignatura\n8. Borrar Asignatura"
-									+ "\n9. Modificar Asignatura\n10. Añadir profesor a una Asignatura\n0. Salir"));
+					opcion = Integer.parseInt(
+							JOptionPane.showInputDialog("Que desea gestionar?\n1. Profesores\n2. Centros"
+									+ "\n3. Asignaturas\n0. Salir"));
 
 					switch (opcion) {
 
 					case 1:
 
-						metodos.insertarProf(bd);
-						metodos.muestraProf(bd);
-						
+						try {
+
+							opcion = Integer.parseInt(JOptionPane
+									.showInputDialog("Que desea hacer?\n1. Insertar profesor\n2. Borrar profesor"
+											+ "\n3. Modificar un profesor\n4. Listar Profesores\n0. Salir"));
+
+							switch (opcion) {
+
+							case 1:
+
+								metodos.insertarProf(bd);
+								metodos.muestraProf(bd);
+
+								break;
+
+							case 2:
+
+								metodos.borrar(bd, "Profesor");
+								metodos.muestraProf(bd);
+
+								break;
+
+							case 3:
+
+								metodos.modificarProf(bd);
+								metodos.muestraProf(bd);
+
+								break;
+
+							case 4:
+
+								metodos.muestraProf(bd);
+
+								break;
+
+							}
+
+						} catch (NumberFormatException e) {
+
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Accion cancelada !!!", " ^-^ Information^-^ ",
+									JOptionPane.INFORMATION_MESSAGE);
+							e.printStackTrace();
+						}
+
 						break;
 
 					case 2:
 
-						metodos.borrar(bd, "Profesor");
-						metodos.muestraProf(bd);
-						
+						try {
+
+							opcion = Integer.parseInt(JOptionPane
+									.showInputDialog("Que desea hacer?\n1. Insertar Centro\n2. Borrar Centro"
+											+ "\n3. Modificar un Centro\n4. Listar Centro\n0. Salir"));
+
+							switch (opcion) {
+							case 1:
+
+								metodos.insertarCen(bd);
+								metodos.muestraCen(bd);
+								
+								break;
+
+							case 2:
+
+								metodos.borrar(bd, "Centro");
+								metodos.muestraCen(bd);
+								
+								break;
+								
+							case 3:
+
+								metodos.modificarCen(bd);
+								metodos.muestraCen(bd);
+								
+								break;
+								
+							case 4:
+
+								metodos.muestraCen(bd);
+								
+								break;
+								
+							}
+
+						} catch (NumberFormatException e) {
+
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Accion cancelada !!!", " ^-^ Information^-^ ",
+									JOptionPane.INFORMATION_MESSAGE);
+							e.printStackTrace();
+						}
+
+
 						break;
 
 					case 3:
-						
-						metodos.modificarProf(bd);
-						metodos.muestraProf(bd);
+
+						try {
+
+							opcion = Integer.parseInt(JOptionPane
+									.showInputDialog("Que desea hacer?\n1. Insertar Asignatura\n2. Borrar Asignatura"
+											+ "\n3. Modificar Asignatura\n4. Listar Asignatura\n5. Anyadir profesor a una asignatura"
+											+"\n6. Eliminar profesor de una asignatura\n0. Salir"));
+
+							switch (opcion) {
+							case 1:
+
+								metodos.insertarAsig(bd);
+								metodos.muestraAsig(bd);
+								
+								break;
+
+							case 2:
+
+								metodos.borrar(bd, "Asignatura");
+								metodos.muestraAsig(bd);
+								
+								break;
+								
+							case 3:
+
+								metodos.modificarAsig(bd);
+								metodos.muestraAsig(bd);
+								
+								break;
+								
+							case 4:
+
+								metodos.muestraAsig(bd);
+								
+								break;
+								
+							case 5:
+
+								metodos.modificarProfAsig(bd);
+								metodos.muestraAsig(bd);
+								
+								break;
+								
+							case 6:
+
+								metodos.eliminarProfAsig(bd);
+								metodos.muestraAsig(bd);
+								
+								break;
+								
+							}
+
+						} catch (NumberFormatException e) {
+
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Accion cancelada !!!", " ^-^ Information^-^ ",
+									JOptionPane.INFORMATION_MESSAGE);
+							e.printStackTrace();
+						}
 
 						break;
 
@@ -55,50 +193,17 @@ public class Menu {
 
 						metodos.insertarCen(bd);
 						metodos.muestraCen(bd);
-						
+
 						break;
 
 					case 5:
 
 						metodos.borrar(bd, "Centro");
 						metodos.muestraCen(bd);
-						
-						break;
-						
-					case 6:
 
-						metodos.modificarCen(bd);
-						metodos.muestraCen(bd);
-						
 						break;
-						
-					case 7:
 
-						metodos.insertarAsig(bd);
-						metodos.muestraAsig(bd);
-						
-						break;
-						
-					case 8:
-
-						metodos.borrar(bd, "Asignatura");
-						metodos.muestraAsig(bd);
-						
-						break;
-						
-					case 9:
-
-						metodos.modificarAsig(bd);
-						metodos.muestraAsig(bd);
-						
-						break;
-						
-					case 10:
-
-						metodos.modificarProfAsig(bd);
-						metodos.muestraAsig(bd);
-						
-						break;
+					
 
 					}
 
@@ -113,10 +218,7 @@ public class Menu {
 			} finally {
 				bd.close();
 			}
-			
-			
-			
-			
+
 		} while (opcion != 0);
 	}
 

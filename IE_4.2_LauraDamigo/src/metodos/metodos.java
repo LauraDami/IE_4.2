@@ -77,7 +77,6 @@ public class metodos {
 
 	}
 
-	
 	// método para insertar un centro
 	public static void insertarCen(ObjectContainer bd) {
 
@@ -102,7 +101,6 @@ public class metodos {
 
 	}
 
-	
 	// método para insertar una asignatura
 	public static void insertarAsig(ObjectContainer bd) {
 
@@ -146,17 +144,48 @@ public class metodos {
 
 	}
 
+	// método para modificar un profesor
+	public static void modificarProfAsig(ObjectContainer bd) {
+
+		int cod = usar.Operaciones.addInt("Indique el codigo de la asignatura");
+		Asignatura a = new Asignatura(cod);
+
+		if (comprobar2(bd, a, cod) == false) {
+
+			System.out.print("Ha habido un error, la asignatura introducida no existe");
+		} else {
+
+			ObjectSet res = bd.queryByExample(new Asignatura(cod));
+			a = (Asignatura) res.next();
+
+			int prof = usar.Operaciones.addInt("Indique el codigo del profesor");
+			Profesor p = new Profesor(prof);
+			ObjectSet res1 = bd.queryByExample(p);
+
+			if (res1.isEmpty()) {
+				System.out.print("Ha habido un error, el profesor introducido no existe");
+			} else {
+
+				p = (Profesor) res1.next();
+				a.addProfesor(p);
+
+				bd.store(a);
+			}
+
+		}
+
+	}
 	
 	
 	// método para modificar un profesor
-		public static void modificarProfAsig(ObjectContainer bd) {
+		public static void eliminarProfAsig(ObjectContainer bd) {
 
 			int cod = usar.Operaciones.addInt("Indique el codigo de la asignatura");
 			Asignatura a = new Asignatura(cod);
 
 			if (comprobar2(bd, a, cod) == false) {
 
-				System.out.print("Ha habido un error, el profesor introducido no existe");
+				System.out.print("Ha habido un error, la asignatura introducida no existe");
 			} else {
 
 				ObjectSet res = bd.queryByExample(new Asignatura(cod));
@@ -170,26 +199,15 @@ public class metodos {
 					System.out.print("Ha habido un error, el profesor introducido no existe");
 				} else {
 
-					p =(Profesor) res1.next();
-					ArrayList<Profesor> arrayProf=a.getSetprofesores();
-					if (arrayProf.contains(p)) {
-						System.out.print("Ese profesor ya ha sido asignado a esa asignatura");
-					}else {
-						arrayProf.add(p);
-						a.setSetprofesores(arrayProf);
-						bd.store(a);
-					}
+					p = (Profesor) res1.next();
+					a.deleteProfesor(p);
 
+					bd.store(a);
 				}
 
 			}
 
 		}
-
-	
-	
-	
-	
 
 	// método para modificar un profesor
 	public static void modificarProf(ObjectContainer bd) {
@@ -226,7 +244,6 @@ public class metodos {
 
 	}
 
-	
 	// método para modificar un centro
 	public static void modificarCen(ObjectContainer bd) {
 
@@ -309,13 +326,21 @@ public class metodos {
 			}
 
 		} else if (tipo == "Centro") {
-			ObjectSet res = bd.queryByExample(new Centro(cod));
+			Centro c = new Centro(cod);
+			ObjectSet res = bd.queryByExample(c);
 
 			if (res.isEmpty()) {
 				System.out.print("Ha habido un error, el centro introducido no existe");
 			} else {
 
-				Centro c = (Centro) res.next();
+				Profesor p = new Profesor(0, null, null, null, null, c);
+				ObjectSet res1 = bd.queryByExample(p);
+				while (res1.hasNext()) {
+					Profesor p1 = (Profesor) res.next();
+					p1.setCentro(null);
+					bd.store(p1);
+				}
+				c = (Centro) res.next();
 				bd.delete(c);
 
 			}

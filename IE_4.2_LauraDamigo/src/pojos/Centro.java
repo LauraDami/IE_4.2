@@ -17,9 +17,20 @@ public class Centro {
 	
 	@Override
 	public String toString() {
+		if (director == null) {
+			
+			return "Centro: " + codCentro + ", nombre:" + nomCentro + ", direccion: "
+					+ direccion + ", localidad: " + localidad + ", provincia: " + provincia 
+					+ "\nEste centro no tiene director]"+"\n********************************************";
+		}else {
+		
 		return "Centro: " + codCentro + ", nombre:" + nomCentro + ", director:" + director + ", direccion: "
 				+ direccion + ", localidad: " + localidad + ", provincia: " + provincia + "]";
+		}
 	}
+	
+	
+	
 	public Integer getCodCentro() {
 		return codCentro;
 	}

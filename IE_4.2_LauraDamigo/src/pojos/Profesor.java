@@ -101,8 +101,16 @@ public class Profesor {
 	
 	@Override
 	public String toString() {
-		return "Profesor: " + codProf + ", nombre=" + nombreApe + ", especialidad=" + nombreEspe;
-				//+ ", fecha de nacimiento=" + fechaNac + ", sexo=" + sexo + ", centro=" + centro;
+		
+		if(centro == null) {
+			return "Profesor: " + codProf + ", \nNombre=" + nombreApe + ", \nespecialidad=" + nombreEspe
+					+ ", \nfecha de nacimiento=" + fechaNac + ", \nsexo=" + sexo + "\nNo tiene centro asignado"
+					+"\n********************************************";
+		}else {
+		return "Profesor: " + codProf + ", \nNombre=" + nombreApe + ", \nespecialidad=" + nombreEspe
+				+ ", \nfecha de nacimiento=" + fechaNac + ", \nsexo=" + sexo + ", \ncentro=" +  centro.getNomCentro()
+				+"\n********************************************";
+		}
 	}
 	
 	
