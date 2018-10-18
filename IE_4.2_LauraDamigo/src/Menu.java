@@ -24,7 +24,8 @@ public class Menu {
 
 					opcion = Integer.parseInt(
 							JOptionPane.showInputDialog("Que desea gestionar?\n1. Profesores\n2. Centros"
-									+ "\n3. Asignaturas\n0. Salir"));
+									+ "\n3. Asignaturas\n4. Consultar profesores de un centro"
+									+"\n5. Consultar las asignaturas de un profesor\n0. Salir"));
 
 					switch (opcion) {
 
