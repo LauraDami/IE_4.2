@@ -64,7 +64,7 @@ public class Asignatura {
 		this.setprofesores = setprofesores;
 	}
 
-	public Asignatura devuelveProf(ObjectContainer bd, int cod) {
+	/*public Asignatura devuelveProf(ObjectContainer bd, int cod) {
 
 		Asignatura c = new Asignatura(cod);
 		ObjectSet res = bd.queryByExample(c);
@@ -77,7 +77,7 @@ public class Asignatura {
 
 		}
 
-	}
+	}*/
 	
 	public boolean comprobarProfesor(Profesor p) {
 		boolean exists=false;
@@ -97,7 +97,9 @@ public class Asignatura {
 		if (comprobarProfesor(p)) {
 			return false;
 		}else {
-			setprofesores.add(p);
+			ArrayList<Profesor>lista = getSetprofesores();
+			lista.add(p);
+			setSetprofesores(lista);
 			return true;
 		}
 	}

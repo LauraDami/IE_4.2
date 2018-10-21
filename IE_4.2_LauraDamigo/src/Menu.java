@@ -192,15 +192,15 @@ public class Menu {
 
 					case 4:
 
-						metodos.insertarCen(bd);
-						metodos.muestraCen(bd);
+						metodos.profesoresCentro(bd);
+						
 
 						break;
 
 					case 5:
 
-						metodos.borrar(bd, "Centro");
-						metodos.muestraCen(bd);
+						metodos.asignaturasProf(bd);
+						
 
 						break;
 

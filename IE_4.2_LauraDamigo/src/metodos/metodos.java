@@ -4,31 +4,32 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.query.Constraint;
+import com.db4o.query.Query;
 
 import pojos.Asignatura;
 import pojos.Centro;
 import static pojos.Centro.devuelveCentro;
 import static pojos.Profesor.devuelveProf;
 import pojos.Profesor;
+import usar.Operaciones;
 
 public class metodos {
 
-	// *********************************METODOS
+	// ****************************METODOS
 	// GLOBALES*******************************************
 
-	public static boolean comprobar2(ObjectContainer bd, Object obj, int cod) {
-		boolean exists = false;
-
-		ObjectSet res = bd.queryByExample(obj);
-		if (res.isEmpty()) {
-			exists = false;
-		} else {
-			exists = true;
-		}
-		return exists;
-	}
+	/*
+	 * public static boolean comprobar2(ObjectContainer bd, Object obj, int cod) {
+	 * boolean exists = false;
+	 * 
+	 * ObjectSet res = bd.queryByExample(obj); if (res.isEmpty()) { exists = false;
+	 * } else { exists = true; } return exists; }
+	 */
 
 	// método para comprobar si un objeto ya existe
 	public static boolean comprobar(ObjectContainer bd, Object obj, int cod) {
@@ -69,7 +70,6 @@ public class metodos {
 
 	}
 
-	
 	public static void insertar(ObjectContainer bd, Object obj) {
 
 		if (obj instanceof Profesor) {
@@ -90,7 +90,6 @@ public class metodos {
 
 	}
 
-	
 	// método para mostrar todo lo que hay en la BBDD
 	public static void mostrarResultado(ObjectSet res) {
 		System.out.println("Recuperados " + res.size() + " Objetos");
@@ -98,78 +97,76 @@ public class metodos {
 			System.out.println(res.next());
 		}
 	}
-	
-	
+
 	// metodo para borrar cualquier tipo de objeto
-		public static void borrar(ObjectContainer bd, String tipo) {
-			int cod = usar.Operaciones.addInt("Indique el codigo");
+	public static void borrar(ObjectContainer bd, String tipo) {
+		int cod = usar.Operaciones.addInt("Indique el codigo");
 
-			if (tipo == "Profesor") {
-				Profesor p = new Profesor(cod);
-				ObjectSet res = bd.queryByExample(p);
+		if (tipo == "Profesor") {
+			Profesor p = new Profesor(cod);
+			ObjectSet res = bd.queryByExample(p);
 
-				if (res.isEmpty()) {
-					System.out.print("Ha habido un error, el profesor introducido no existe");
-				} else {
+			if (res.isEmpty()) {
+				System.out.print("Ha habido un error, el profesor introducido no existe");
+			} else {
 
-					Centro c = new Centro(0, null, p, null, null, null);
-					ObjectSet res1 = bd.queryByExample(c);
-					while (res1.hasNext()) {
-						Centro c1 = (Centro) res.next();
-						c1.setDireccion(null);
-						bd.store(c1);
-					}
-
-					Asignatura a = new Asignatura();
-					ObjectSet res2 = bd.queryByExample(a);
-					while (res1.hasNext()) {
-						Asignatura a1 = (Asignatura) res.next();
-						a1.deleteProfesor(p);
-						bd.store(a1);
-					}
-					
-					
-					p = (Profesor) res.next();
-					bd.delete(p);
-
+				Centro c = new Centro(0, null, p, null, null, null);
+				ObjectSet res1 = bd.queryByExample(c);
+				while (res1.hasNext()) {
+					Centro c1 = (Centro) res.next();
+					c1.setDireccion(null);
+					bd.store(c1);
 				}
 
-			} else if (tipo == "Asignatura") {
-				ObjectSet res = bd.queryByExample(new Asignatura(cod));
-
-				if (res.isEmpty()) {
-					System.out.print("Ha habido un error, la asignatura introducida no existe");
-				} else {
-
-					Asignatura a = (Asignatura) res.next();
-					bd.delete(a);
-
+				Asignatura a = new Asignatura();
+				ObjectSet res2 = bd.queryByExample(a);
+				while (res1.hasNext()) {
+					Asignatura a1 = (Asignatura) res.next();
+					a1.deleteProfesor(p);
+					bd.store(a1);
 				}
 
-			} else if (tipo == "Centro") {
-				Centro c = new Centro(cod);
-				ObjectSet res = bd.queryByExample(c);
+				p = (Profesor) res.next();
+				bd.delete(p);
 
-				if (res.isEmpty()) {
-					System.out.print("Ha habido un error, el centro introducido no existe");
-				} else {
+			}
 
-					Profesor p = new Profesor(0, null, null, null, null, c);
-					ObjectSet res1 = bd.queryByExample(p);
-					while (res1.hasNext()) {
-						Profesor p1 = (Profesor) res.next();
-						p1.setCentro(null);
-						bd.store(p1);
-					}
-					c = (Centro) res.next();
-					bd.delete(c);
+		} else if (tipo == "Asignatura") {
+			ObjectSet res = bd.queryByExample(new Asignatura(cod));
 
+			if (res.isEmpty()) {
+				System.out.print("Ha habido un error, la asignatura introducida no existe");
+			} else {
+
+				Asignatura a = (Asignatura) res.next();
+				bd.delete(a);
+
+			}
+
+		} else if (tipo == "Centro") {
+			Centro c = new Centro(cod);
+			ObjectSet res = bd.queryByExample(c);
+
+			if (res.isEmpty()) {
+				System.out.print("Ha habido un error, el centro introducido no existe");
+			} else {
+
+				Profesor p = new Profesor(0, null, null, null, null, c);
+				ObjectSet res1 = bd.queryByExample(p);
+				while (res1.hasNext()) {
+					Profesor p1 = (Profesor) res.next();
+					p1.setCentro(null);
+					bd.store(p1);
 				}
+				c = (Centro) res.next();
+				bd.delete(c);
+
 			}
 		}
+	}
 
-		
-		//************************************METODOS LISTAR*****************************************
+	// ************************************METODOS
+	// LISTAR*****************************************
 
 	// método para mostrar la lista de profesores
 	public static void muestraProf(ObjectContainer bd) {
@@ -194,9 +191,9 @@ public class metodos {
 		ObjectSet res = bd.queryByExample(a);
 		mostrarResultado(res);
 	}
-	
-	
-	//************************************METODOS INSERTAR*****************************************
+
+	// ************************************METODOS
+	// INSERTAR*****************************************
 
 	// método para insertar un profesor
 	public static void insertarProf(ObjectContainer bd) {
@@ -234,7 +231,7 @@ public class metodos {
 		int cod = usar.Operaciones.addInt("Indique el código del centro");
 		Centro c = new Centro(cod);
 
-		if (comprobar2(bd, c, cod) == false) {
+		if (comprobar(bd, c, cod) == false) {
 
 			ObjectSet res = bd.queryByExample(c);
 
@@ -254,11 +251,20 @@ public class metodos {
 
 	// método para insertar una asignatura
 	public static void insertarAsig(ObjectContainer bd) {
+		
+		/*ArrayList<Profesor> setprofesores=new ArrayList<Profesor>();
+		Profesor p = new Profesor(6, "prof6", "sdvwsv", Operaciones.addFecha("fecha"), "h");
+		setprofesores.add(p);
+		
+		Asignatura a1 = new Asignatura(3, "asig3", setprofesores);
+		bd.store(a1);
+		*/
+		
 
 		int cod = usar.Operaciones.addInt("Indique el código de la asignatura");
 		Asignatura a = new Asignatura(cod);
 
-		if (comprobar2(bd, a, cod) == false) {
+		if (comprobar(bd, a, cod) == false) {
 
 			ObjectSet res = bd.queryByExample(a);
 
@@ -272,10 +278,9 @@ public class metodos {
 		}
 
 	}
-	
-	
-	
-	//************************************METODOS MODIFICAR*****************************************
+
+	// ************************************METODOS
+	// MODIFICAR*****************************************
 
 	// método para modificar una asignatura
 	public static void modificarAsig(ObjectContainer bd) {
@@ -283,7 +288,7 @@ public class metodos {
 		int cod = usar.Operaciones.addInt("Indique el codigo de la asignatura");
 		Asignatura a = new Asignatura(cod);
 
-		if (comprobar2(bd, a, cod) == false) {
+		if (comprobar(bd, a, cod) == false) {
 
 			System.out.print("Ha habido un error, la asignatura introducida no existe");
 
@@ -305,7 +310,7 @@ public class metodos {
 		int cod = usar.Operaciones.addInt("Indique el codigo de la asignatura");
 		Asignatura a = new Asignatura(cod);
 
-		if (comprobar2(bd, a, cod) == false) {
+		if (comprobar(bd, a, cod) == false) {
 
 			System.out.print("Ha habido un error, la asignatura introducida no existe");
 		} else {
@@ -314,7 +319,9 @@ public class metodos {
 			a = (Asignatura) res.next();
 
 			int prof = usar.Operaciones.addInt("Indique el codigo del profesor");
+			
 			Profesor p = new Profesor(prof);
+			
 			ObjectSet res1 = bd.queryByExample(p);
 
 			if (res1.isEmpty()) {
@@ -322,8 +329,12 @@ public class metodos {
 			} else {
 
 				p = (Profesor) res1.next();
-				a.addProfesor(p);
-
+				
+				ArrayList<Profesor>lista=new ArrayList <Profesor>();//
+				//lista=a.getSetprofesores();
+				lista.add(p);
+				a.setSetprofesores(lista);
+				
 				bd.store(a);
 			}
 
@@ -337,7 +348,7 @@ public class metodos {
 		int cod = usar.Operaciones.addInt("Indique el codigo de la asignatura");
 		Asignatura a = new Asignatura(cod);
 
-		if (comprobar2(bd, a, cod) == false) {
+		if (comprobar(bd, a, cod) == false) {
 
 			System.out.print("Ha habido un error, la asignatura introducida no existe");
 		} else {
@@ -432,6 +443,86 @@ public class metodos {
 
 	}
 
+	// ***************************CONSULTAS*************************************
+
+	// METODO PARA VER LOS PROFESORES QUE HAY EN UN CENTRO
+
+	public static void profesoresCentro(ObjectContainer bd) {
+		boolean existe = false;
+		int cod = usar.Operaciones.addInt("Indique el codigo del centro");
+		Centro c = new Centro(cod);
+		if (comprobar(bd, c, cod) == false) {
+			System.out.print("Ha habido un error, el centro introducido no existe");
+		} else {
+
+			Profesor p = new Profesor(c);
+
+			ObjectSet res = bd.queryByExample(p);
+
+			while (res.hasNext()) {
+				existe = true;
+				System.out.println(res.next());
+			}
+			if (existe == false) {
+				System.out.print("No hay ningún profesor en ese centro");
+			}
+		}
+	}
+
+	// METODO PARA VER LAS ASIGNATURAS DE UN PROFESOR
+
+	public static boolean asignaturasProf(ObjectContainer bd) {
+		int codProf = usar.Operaciones.addInt("Indique el codigo del profesor");
+		//Profesor p = new Profesor(codProf);
+		Query query = bd.query();
+		query.constrain(Profesor.class);
+		query.descend("codProf").constrain(codProf);
+
+		ObjectSet<Profesor> res = query.execute();
+		
+		if (res.size()==0) {
+			
+			JOptionPane.showMessageDialog(null, "Accion Cancelada, Necesita crear el Profesor antes", "Informacion",
+					JOptionPane.INFORMATION_MESSAGE);
+
+			return false;
+			
+		}else{
+			
+			Profesor p = res.next();
+			
+			if(comprobar(bd,p, codProf)) {
+				
+				Asignatura a = new Asignatura();
+				
+				ArrayList<Profesor> lista=new ArrayList<Profesor>();
+				lista.add(p);
+				a.setSetprofesores(lista);
+				
+				ObjectSet<Asignatura> res2 = bd.queryByExample(a);
+				
+				System.out.println("Este profesor imparte " + res2.size() + " asignatura/s: ");
+				
+				while(res2.hasNext()) {
+					System.out.println(res2.next().getNombreAsi());
+				}
+				
+				return true;
+				
+			}else{
+				
+				JOptionPane.showMessageDialog(null, "Accion Cancelada, Codigo de Profesor no encontrado", "Informacion",
+						JOptionPane.INFORMATION_MESSAGE);
+				
+				return false;
+				
+			}
+			
+		}
+		
+
+	}
+
 	/*
 	 * /método para borrar un profesor public static void borrarProf(ObjectContainer
 	 * bd) {
@@ -451,5 +542,4 @@ public class metodos {
 	 * }
 	 */
 
-	
 }

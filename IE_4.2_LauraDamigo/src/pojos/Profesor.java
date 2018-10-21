@@ -72,6 +72,15 @@ public class Profesor {
 		this.centro = null;
 	}
 	
+	public Profesor(Centro cen) {
+		this.codProf = null;
+		this.nombreApe = null;
+		this.nombreEspe = null;
+		this.fechaNac = null;
+		this.sexo = null;
+		this.centro = cen;
+	}
+	
 	public Profesor (Integer codProf, String nombreApe, String nombreEspe, LocalDate fechaNac, String sexo) {
 		
 		this.codProf = codProf;
