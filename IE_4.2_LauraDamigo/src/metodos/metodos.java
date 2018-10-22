@@ -23,14 +23,7 @@ public class metodos {
 	// ****************************METODOS
 	// GLOBALES*******************************************
 
-	/*
-	 * public static boolean comprobar2(ObjectContainer bd, Object obj, int cod) {
-	 * boolean exists = false;
-	 * 
-	 * ObjectSet res = bd.queryByExample(obj); if (res.isEmpty()) { exists = false;
-	 * } else { exists = true; } return exists; }
-	 */
-
+	
 	// método para comprobar si un objeto ya existe
 	public static boolean comprobar(ObjectContainer bd, Object obj, int cod) {
 		boolean exists = false;
@@ -252,15 +245,7 @@ public class metodos {
 	// método para insertar una asignatura
 	public static void insertarAsig(ObjectContainer bd) {
 		
-		/*ArrayList<Profesor> setprofesores=new ArrayList<Profesor>();
-		Profesor p = new Profesor(6, "prof6", "sdvwsv", Operaciones.addFecha("fecha"), "h");
-		setprofesores.add(p);
 		
-		Asignatura a1 = new Asignatura(3, "asig3", setprofesores);
-		bd.store(a1);
-		*/
-		
-
 		int cod = usar.Operaciones.addInt("Indique el código de la asignatura");
 		Asignatura a = new Asignatura(cod);
 
@@ -535,23 +520,6 @@ public class metodos {
 
 	}
 
-	/*
-	 * /método para borrar un profesor public static void borrarProf(ObjectContainer
-	 * bd) {
-	 * 
-	 * int cod = usar.Operaciones.addInt("Indique el codigo del profesor");
-	 * //Profesor p =new Profesor (cod); ObjectSet res = bd.queryByExample(new
-	 * Profesor (cod));
-	 * 
-	 * if (res.isEmpty()) {
-	 * System.out.print("Ha habido un error, el profesor introducido no existe"); }
-	 * else {
-	 * 
-	 * Profesor p=(Profesor)res.next(); bd.delete(p);
-	 * 
-	 * }
-	 * 
-	 * }
-	 */
+	
 
 }
