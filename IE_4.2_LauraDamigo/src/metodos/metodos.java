@@ -304,6 +304,19 @@ public class metodos {
 
 	}
 
+	
+	//método para copiar un array de la BBDD
+	public static ArrayList<Profesor> sacarArray(ArrayList<Profesor> profesores, Profesor p) {
+		ArrayList<Profesor> aux=new ArrayList<Profesor>();
+		for (int i=0; i<profesores.size(); i++) {
+			aux.add(profesores.get(i));
+		}
+		aux.add(p);
+		return aux;
+		
+	}
+		
+	
 	// método para modificar un profesor
 	public static void modificarProfAsig(ObjectContainer bd) {
 
@@ -330,9 +343,8 @@ public class metodos {
 
 				p = (Profesor) res1.next();
 				
-				ArrayList<Profesor>lista=new ArrayList <Profesor>();//
-				//lista=a.getSetprofesores();
-				lista.add(p);
+				ArrayList<Profesor>lista=sacarArray(a.getSetprofesores(), p);
+				
 				a.setSetprofesores(lista);
 				
 				bd.store(a);
